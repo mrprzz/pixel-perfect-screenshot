@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
-import intro from "@/assets/intro.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -15,61 +15,36 @@ export const Route = createFileRoute("/")({
 });
 
 function Intro() {
-  return (
-    <div className="grain relative flex min-h-[100svh] flex-col overflow-hidden bg-background">
-      <img
-        src={intro}
-        alt=""
-        width={1088}
-        height={1920}
-        className="animate-slow-zoom absolute inset-0 h-full w-full object-cover opacity-70"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background" />
+  const navigate = useNavigate();
+  useEffect(() => {
+    const t = setTimeout(() => navigate({ to: "/univers" }), 4500);
+    return () => clearTimeout(t);
+  }, [navigate]);
 
-      <div className="relative z-10 flex justify-end p-5">
-        <Link
-          to="/univers"
-          className="animate-rise rounded-full px-4 py-2 text-xs uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:text-foreground"
-          style={{ animationDelay: "600ms" }}
-        >
-          Passer l'intro
+  return (
+    <div className="flex min-h-[100svh] flex-col bg-background px-6">
+      <div className="flex justify-end pt-5">
+        <Link to="/univers" className="eyebrow transition-colors hover:text-foreground">
+          Passer
         </Link>
       </div>
-
-      <div className="relative z-10 mt-auto flex flex-col items-center px-6 pb-16 text-center md:pb-24">
-        <p
-          className="animate-rise mb-6 text-[11px] uppercase tracking-[0.5em] text-muted-foreground"
-          style={{ animationDelay: "300ms" }}
-        >
-          Intelligence d'opportunités
-        </p>
-        <h1 className="flex text-6xl font-bold md:text-8xl" aria-label="VÆRO">
-          {"VÆRO".split("").map((l, i) => (
-            <span
-              key={i}
-              className="animate-letter text-gold tracking-[0.15em]"
-              style={{ animationDelay: `${500 + i * 180}ms` }}
-            >
-              {l}
-            </span>
-          ))}
+      <div className="flex flex-1 flex-col items-center justify-center text-center">
+        <h1 className="animate-fade font-display text-6xl tracking-[0.28em] md:text-8xl" style={{ animationDelay: "150ms" }}>
+          VÆRO
         </h1>
-        <p
-          className="animate-rise mt-6 max-w-sm text-sm leading-relaxed text-muted-foreground"
+        <span className="animate-line mt-6 block h-px w-24 bg-foreground/30" style={{ animationDelay: "700ms" }} />
+        <p className="animate-rise mt-6 max-w-xs text-sm leading-relaxed text-muted-foreground" style={{ animationDelay: "1100ms" }}>
+          L'analyse des opportunités d'achat et de revente.
+        </p>
+        <Link
+          to="/univers"
+          className="animate-rise mt-10 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-85"
           style={{ animationDelay: "1500ms" }}
         >
-          Repérer les biens sous-évalués. Estimer leur juste valeur. Anticiper la marge.
-        </p>
-        <Link
-          to="/univers"
-          className="animate-rise group relative mt-10 inline-flex items-center gap-3 overflow-hidden rounded-full border border-primary/40 bg-primary/10 px-8 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-primary backdrop-blur transition-all hover:bg-primary hover:text-primary-foreground"
-          style={{ animationDelay: "1900ms" }}
-        >
-          <span className="animate-sweep pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-          Entrer dans l'univers
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          Accéder au site <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
+      <p className="eyebrow pb-6 text-center">Version de démonstration</p>
     </div>
   );
 }
