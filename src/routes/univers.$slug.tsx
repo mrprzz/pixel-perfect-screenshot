@@ -41,7 +41,7 @@ function UniversePage() {
   }, [u, state, sort]);
 
   const active = Object.values(state).filter(Boolean).length;
-  const field = "w-full rounded-xl border bg-input/40 px-3 py-2.5 text-sm outline-none transition-colors focus:border-uni";
+  const field = "w-full rounded-xl border bg-input/40 px-3 py-2.5 text-sm outline-none transition-colors focus:border-foreground/40";
 
   const filters = (
     <div className="grid gap-4">
@@ -75,7 +75,7 @@ function UniversePage() {
         </label>
       ))}
       {active > 0 && (
-        <button onClick={() => setState({})} className="text-left text-sm text-uni underline-offset-4 hover:underline">
+        <button onClick={() => setState({})} className="text-left text-sm text-muted-foreground underline underline-offset-4 hover:underline">
           Réinitialiser les filtres
         </button>
       )}
@@ -84,35 +84,38 @@ function UniversePage() {
 
   return (
     <Shell universe={u.slug}>
-      <section className="relative overflow-hidden">
-        <img src={u.image} alt="" width={1024} height={1280} className="animate-slow-zoom absolute inset-0 h-full w-full object-cover opacity-40" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/70 to-background" />
-        <div className="relative mx-auto max-w-6xl px-5 pt-8 pb-10 md:pt-16">
-          <Link to="/univers" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground">
-            <ArrowLeft className="h-3.5 w-3.5" /> Univers
-          </Link>
-          <p className="animate-rise mt-6 font-display text-sm text-uni">{u.index} / 06</p>
-          <h1 className="animate-rise mt-2 text-4xl font-bold md:text-6xl" style={{ animationDelay: "80ms" }}>{u.name}</h1>
-          <p className="animate-rise mt-3 max-w-md text-muted-foreground" style={{ animationDelay: "160ms" }}>{u.tagline}</p>
-          <div className="mt-6 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
-            {universes.map((x) => (
-              <Link
-                key={x.slug}
-                to="/univers/$slug"
-                params={{ slug: x.slug }}
-                className="glass shrink-0 rounded-full px-4 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
-                activeProps={{ className: "border-uni text-uni" }}
-              >
-                {x.short}
-              </Link>
-            ))}
+      <section className="mx-auto max-w-6xl px-5 pt-6 md:pt-10">
+        <Link to="/univers" className="eyebrow inline-flex items-center gap-2 hover:text-foreground">
+          <ArrowLeft className="h-3.5 w-3.5" /> Univers
+        </Link>
+        <div className="mt-6 grid gap-6 md:grid-cols-[1fr_1.2fr] md:items-end md:gap-12">
+          <div className="animate-rise">
+            <p className="text-xs font-medium text-uni">{u.index} / 06</p>
+            <h1 className="mt-2 text-4xl leading-[1.05] md:text-6xl">{u.name}</h1>
+            <p className="mt-3 max-w-md text-muted-foreground">{u.tagline}</p>
           </div>
+          <div className="animate-fade overflow-hidden rounded-xl bg-muted">
+            <img src={u.image} alt={u.name} width={1280} height={960} className="aspect-[16/10] w-full object-cover" />
+          </div>
+        </div>
+        <div className="mt-8 flex gap-2 overflow-x-auto border-b pb-4 [scrollbar-width:none]">
+          {universes.map((x) => (
+            <Link
+              key={x.slug}
+              to="/univers/$slug"
+              params={{ slug: x.slug }}
+              className="shrink-0 rounded-full border px-4 py-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+              activeProps={{ className: "border-foreground bg-foreground text-primary-foreground" }}
+            >
+              {x.short}
+            </Link>
+          ))}
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-8 px-5 pb-16 md:grid-cols-[260px_1fr]">
+      <section className="mx-auto grid max-w-6xl gap-8 px-5 pt-8 pb-16 md:grid-cols-[260px_1fr]">
         <aside className="hidden md:block">
-          <div className="sticky top-20 rounded-2xl border bg-card p-5">
+          <div className="sticky top-20 rounded-xl border bg-card p-5 shadow-soft">
             <h2 className="mb-4 text-sm font-semibold uppercase tracking-widest">Filtres</h2>
             {filters}
           </div>
@@ -128,7 +131,7 @@ function UniversePage() {
                 aria-label="Trier"
                 value={sort}
                 onChange={(e) => setSort(e.target.value as Sort)}
-                className="rounded-full border bg-card px-3 py-2 text-xs outline-none focus:border-uni"
+                className="rounded-full border bg-card px-3 py-2 text-xs outline-none focus:border-foreground/40"
               >
                 <option value="margin">Marge</option>
                 <option value="confidence">Confiance</option>
@@ -143,8 +146,8 @@ function UniversePage() {
             </div>
           </div>
 
-          <p className="mb-5 rounded-xl border border-warning/30 bg-warning/5 px-4 py-3 text-xs leading-relaxed text-muted-foreground">
-            Annonces, prix et scores sont des <strong className="text-warning">exemples fictifs</strong> à but de démonstration. Aucune analyse IA n'est encore connectée.
+          <p className="mb-5 rounded-lg border bg-muted/60 px-4 py-3 text-xs leading-relaxed text-muted-foreground">
+            Annonces, prix et scores sont des <strong className="text-foreground">exemples fictifs</strong> à but de démonstration. Aucune analyse IA n'est encore connectée.
           </p>
 
           {results.length ? (
@@ -163,8 +166,8 @@ function UniversePage() {
 
       {open && (
         <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true" aria-label="Filtres">
-          <button aria-label="Fermer" onClick={() => setOpen(false)} className="absolute inset-0 bg-background/70 backdrop-blur-sm" />
-          <div className="animate-rise absolute inset-x-0 bottom-0 max-h-[85svh] overflow-y-auto rounded-t-3xl border bg-card p-6">
+          <button aria-label="Fermer" onClick={() => setOpen(false)} className="absolute inset-0 bg-foreground/30" />
+          <div className="animate-rise absolute inset-x-0 bottom-0 max-h-[85svh] overflow-y-auto rounded-t-2xl border bg-card p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
             <div className="mb-5 flex items-center justify-between">
               <h2 className="text-lg font-semibold">Filtres</h2>
               <button onClick={() => setOpen(false)} aria-label="Fermer" className="rounded-full border p-2">
@@ -174,7 +177,7 @@ function UniversePage() {
             {filters}
             <button
               onClick={() => setOpen(false)}
-              className="mt-6 w-full rounded-full bg-uni py-3.5 text-sm font-semibold text-primary-foreground"
+              className="mt-6 w-full rounded-full bg-primary py-3.5 text-sm font-semibold text-primary-foreground"
             >
               Voir {results.length} résultat{results.length > 1 ? "s" : ""}
             </button>
