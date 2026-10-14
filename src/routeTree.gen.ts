@@ -10,33 +10,97 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AlertesRouteImport } from './routes/alertes'
+import { Route as AssistantRouteImport } from './routes/assistant'
+import { Route as FavorisRouteImport } from './routes/favoris'
+import { Route as UniversIndexRouteImport } from './routes/univers.index'
+import { Route as UniversSlugRouteImport } from './routes/univers.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AlertesRoute = AlertesRouteImport.update({
+  id: '/alertes',
+  path: '/alertes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssistantRoute = AssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavorisRoute = FavorisRouteImport.update({
+  id: '/favoris',
+  path: '/favoris',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UniversIndexRoute = UniversIndexRouteImport.update({
+  id: '/univers/',
+  path: '/univers/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UniversSlugRoute = UniversSlugRouteImport.update({
+  id: '/univers/$slug',
+  path: '/univers/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/alertes': typeof AlertesRoute
+  '/assistant': typeof AssistantRoute
+  '/favoris': typeof FavorisRoute
+  '/univers/$slug': typeof UniversSlugRoute
+  '/univers/': typeof UniversIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/alertes': typeof AlertesRoute
+  '/assistant': typeof AssistantRoute
+  '/favoris': typeof FavorisRoute
+  '/univers/$slug': typeof UniversSlugRoute
+  '/univers': typeof UniversIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/alertes': typeof AlertesRoute
+  '/assistant': typeof AssistantRoute
+  '/favoris': typeof FavorisRoute
+  '/univers/$slug': typeof UniversSlugRoute
+  '/univers/': typeof UniversIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/alertes'
+    | '/assistant'
+    | '/favoris'
+    | '/univers/$slug'
+    | '/univers/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    '/' | '/alertes' | '/assistant' | '/favoris' | '/univers/$slug' | '/univers'
+  id:
+    | '__root__'
+    | '/'
+    | '/alertes'
+    | '/assistant'
+    | '/favoris'
+    | '/univers/$slug'
+    | '/univers/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlertesRoute: typeof AlertesRoute
+  AssistantRoute: typeof AssistantRoute
+  FavorisRoute: typeof FavorisRoute
+  UniversSlugRoute: typeof UniversSlugRoute
+  UniversIndexRoute: typeof UniversIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +112,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/alertes': {
+      id: '/alertes'
+      path: '/alertes'
+      fullPath: '/alertes'
+      preLoaderRoute: typeof AlertesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assistant': {
+      id: '/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoris': {
+      id: '/favoris'
+      path: '/favoris'
+      fullPath: '/favoris'
+      preLoaderRoute: typeof FavorisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/univers/': {
+      id: '/univers/'
+      path: '/univers'
+      fullPath: '/univers/'
+      preLoaderRoute: typeof UniversIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/univers/$slug': {
+      id: '/univers/$slug'
+      path: '/univers/$slug'
+      fullPath: '/univers/$slug'
+      preLoaderRoute: typeof UniversSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlertesRoute: AlertesRoute,
+  AssistantRoute: AssistantRoute,
+  FavorisRoute: FavorisRoute,
+  UniversSlugRoute: UniversSlugRoute,
+  UniversIndexRoute: UniversIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
