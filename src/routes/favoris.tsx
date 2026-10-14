@@ -25,7 +25,7 @@ function Favorites() {
   return (
     <Shell>
       <section className="mx-auto max-w-6xl px-5 py-10">
-        <h1 className="text-4xl font-bold">Favoris</h1>
+        <h1 className="text-4xl md:text-5xl">Favoris</h1>
         <p className="mt-2 text-sm text-muted-foreground">Enregistrés sur cet appareil uniquement, en attendant les comptes.</p>
         {groups.length === 0 ? (
           <div className="mt-10 rounded-2xl border border-dashed p-10 text-center">
@@ -35,7 +35,7 @@ function Favorites() {
         ) : (
           groups.map(({ u, items }) => (
             <div key={u.slug} data-u={u.slug} className="mt-10">
-              <h2 className="mb-4 text-sm uppercase tracking-widest text-uni">{u.name}</h2>
+              <h2 className="mb-4 text-2xl">{u.name}</h2>
               <div className="grid gap-4 lg:grid-cols-2">
                 {items.map((o) => <OpportunityCard key={o.id} o={o} />)}
               </div>
